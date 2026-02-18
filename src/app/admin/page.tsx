@@ -127,7 +127,7 @@ const genPass = () => {
   const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#";
   return Array.from({length:12}, ()=>chars[Math.floor(Math.random()*chars.length)]).join("");
 };
-const genUser = (name) => name.toLowerCase().replace(/[^a-z]/g,"").slice(0,8) + Math.floor(Math.random()*99);
+const genUser = (name: string) => name.toLowerCase().replace(/[^a-z]/g,"").slice(0,8) + Math.floor(Math.random()*99);
 
 // ─── Clinic Modal ──────────────────────────────────────────
 function ClinicModal({ lang, clinic, onSave, onClose }) {
