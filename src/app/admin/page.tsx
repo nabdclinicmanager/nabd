@@ -8,7 +8,8 @@ import { useState, useEffect } from "react";
 // هذه الصفحة خاصة بك أنت فقط، غير مرتبطة بـ Sidebar العيادة
 // ============================================================
 
-const T = {
+type Lang = "ar" | "en";
+const T: Record<Lang, any> = {
   ar: {
     appName: "نبض", adminBadge: "لوحة المدير",
     nav: { clinics:"العيادات", users:"المستخدمون", subscriptions:"الاشتراكات", settings:"الإعدادات" },
@@ -130,7 +131,7 @@ const genPass = () => {
 const genUser = (name: string) => name.toLowerCase().replace(/[^a-z]/g,"").slice(0,8) + Math.floor(Math.random()*99);
 
 // ─── Clinic Modal ──────────────────────────────────────────
-function ClinicModal({ lang, clinic, onSave, onClose }: { lang: string; clinic: any; onSave: any; onClose: any }) {
+function ClinicModal({ lang, clinic, onSave, onClose }: { lang: Lang; clinic: any; onSave: any; onClose: any }) {
 
   const tr = T[lang]; const isAr = lang==="ar";
   const isEdit = !!clinic?.id;
@@ -245,7 +246,7 @@ function ClinicModal({ lang, clinic, onSave, onClose }: { lang: string; clinic: 
 }
 
 // ─── Reset Password Modal ──────────────────────────────────
-function ResetPassModal({ lang, clinic, onClose }: { lang: string; clinic: any; onClose: any }) {
+function ResetPassModal({ lang, clinic, onClose }: { lang: Lang; clinic: any; onClose: any }) {
 
   const tr = T[lang];
   const [pass, setPass] = useState(genPass());
