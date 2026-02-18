@@ -130,7 +130,8 @@ const genPass = () => {
 const genUser = (name: string) => name.toLowerCase().replace(/[^a-z]/g,"").slice(0,8) + Math.floor(Math.random()*99);
 
 // ─── Clinic Modal ──────────────────────────────────────────
-function ClinicModal({ lang, clinic, onSave, onClose }) {
+function ClinicModal({ lang, clinic, onSave, onClose }: { lang: string; clinic: any; onSave: any; onClose: any }) {
+
   const tr = T[lang]; const isAr = lang==="ar";
   const isEdit = !!clinic?.id;
   const [form, setForm] = useState({
@@ -244,7 +245,8 @@ function ClinicModal({ lang, clinic, onSave, onClose }) {
 }
 
 // ─── Reset Password Modal ──────────────────────────────────
-function ResetPassModal({ lang, clinic, onClose }) {
+function ResetPassModal({ lang, clinic, onClose }: { lang: string; clinic: any; onClose: any }) {
+
   const tr = T[lang];
   const [pass, setPass] = useState(genPass());
   const [copied, setCopied] = useState(false);
