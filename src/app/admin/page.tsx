@@ -3,13 +3,43 @@
 import { useState, useEffect } from "react";
 
 // ============================================================
+// TypeScript Types
+// ============================================================
+
+type Lang = "ar" | "en";
+
+interface ClinicData {
+  id?: number;
+  name: string;
+  owner: string;
+  email: string;
+  phone: string;
+  plan: "basic" | "pro" | "enterprise";
+  expiry: string;
+  status: "active" | "inactive" | "expired";
+  creds?: { username: string; password: string };
+}
+
+interface ModalProps {
+  lang: Lang;
+  clinic?: ClinicData | null;
+  onSave: (data: ClinicData) => void;
+  onClose: () => void;
+}
+
+interface ResetPassModalProps {
+  lang: Lang;
+  clinic: ClinicData | null;
+  onClose: () => void;
+}
+
+// ============================================================
 // NABD - نبض | Admin Panel
 // لوحة المدير الخاصة — إدارة العيادات + المستخدمين + الاشتراكات
 // هذه الصفحة خاصة بك أنت فقط، غير مرتبطة بـ Sidebar العيادة
 // ============================================================
 
-type Lang = "ar" | "en";
-const T: Record<Lang, any> = {
+const T = {
   ar: {
     appName: "نبض", adminBadge: "لوحة المدير",
     nav: { clinics:"العيادات", users:"المستخدمون", subscriptions:"الاشتراكات", settings:"الإعدادات" },
@@ -124,16 +154,15 @@ const STATUS_COLORS = {
   expired:  { bg:"rgba(192,57,43,.1)",  color:"#c0392b" },
 };
 
-const genPass = () => {
+const genPass = (): string => {
   const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#";
   return Array.from({length:12}, ()=>chars[Math.floor(Math.random()*chars.length)]).join("");
 };
-const genUser = (name: string) => name.toLowerCase().replace(/[^a-z]/g,"").slice(0,8) + Math.floor(Math.random()*99);
+const genUser = (name: string): string => name.toLowerCase().replace(/[^a-z]/g,"").slice(0,8) + Math.floor(Math.random()*99);
 
 // ─── Clinic Modal ──────────────────────────────────────────
-function ClinicModal({ lang, clinic, onSave, onClose }: { lang: Lang; clinic: any; onSave: any; onClose: any }) {
-
-  const tr = T[lang]; const isAr = lang==="ar";
+function ClinicModal({ lang, clinic, onSave, onClose }: ModalProps) {
+  const tr = T[lang as Lang]; const isAr = lang==="ar";
   const isEdit = !!clinic?.id;
   const [form, setForm] = useState({
     name: clinic?.name||"", owner: clinic?.owner||"",
@@ -246,9 +275,8 @@ function ClinicModal({ lang, clinic, onSave, onClose }: { lang: Lang; clinic: an
 }
 
 // ─── Reset Password Modal ──────────────────────────────────
-function ResetPassModal({ lang, clinic, onClose }: { lang: Lang; clinic: any; onClose: any }) {
-
-  const tr = T[lang];
+function ResetPassModal({ lang, clinic, onClose }: ResetPassModalProps) {
+  const tr = T[lang as Lang];
   const [pass, setPass] = useState(genPass());
   const [copied, setCopied] = useState(false);
   const copy = async () => {
