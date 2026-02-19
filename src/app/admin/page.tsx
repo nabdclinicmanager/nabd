@@ -181,7 +181,14 @@ function ClinicModal({
     plan: clinic?.plan||"basic", expiry: clinic?.expiry||"",
     status: clinic?.status||"active",
   });
-  const [creds, setCreds] = useState(null);
+  const [creds, setCreds] = useState<{
+  username: string;
+  password: string;
+}>({
+  username: "",
+  password: ""
+});
+
   const [copied, setCopied] = useState({u:false,p:false});
   const [error, setError] = useState("");
 
