@@ -203,7 +203,7 @@ function ClinicModal({
     onSave({ ...clinic, ...form, id:clinic?.id, creds });
   };
 
-  const copy = async (text, key) => {
+  const copy = async (text: string, key: string): Promise<void> => {
     await navigator.clipboard.writeText(text).catch(()=>{});
     setCopied(p=>({...p,[key]:true}));
     setTimeout(()=>setCopied(p=>({...p,[key]:false})),2000);
