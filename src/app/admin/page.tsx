@@ -161,7 +161,18 @@ const genPass = (): string => {
 const genUser = (name: string): string => name.toLowerCase().replace(/[^a-z]/g,"").slice(0,8) + Math.floor(Math.random()*99);
 
 // ─── Clinic Modal ──────────────────────────────────────────
-function ClinicModal({ lang, clinic, onSave, onClose }: ModalProps) {
+function ClinicModal({
+  lang,
+  clinic,
+  onSave,
+  onClose
+}: {
+  lang: string;
+  clinic: any;
+  onSave: any;
+  onClose: any;
+}) {
+
   const tr = T[lang as Lang]; const isAr = lang==="ar";
   const isEdit = !!clinic?.id;
   const [form, setForm] = useState({
